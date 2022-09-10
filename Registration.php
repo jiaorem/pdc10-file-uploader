@@ -6,7 +6,9 @@ class Registration
 	protected $name;
 	protected $email;
 	protected $password;
-	protected $picture;
+	protected $path;
+	protected $type;
+
 
 	const TYPE_DOCUMENT = 'document';
 	const TYPE_IMAGE = 'image';
@@ -17,12 +19,14 @@ class Registration
 	public function __construct(
 		$name,
         $email,
-		$picture = null,
-		$password = null
+		$password,
+		$path = null,
+		$type = null
 	)
 	{
 		$this->name = $name;
-		$this->picture = $picture;
+		$this->path = $path;
+		$this->type = $type;
 		$this->email = $email;
         $this->password = $password;
 	}
@@ -37,9 +41,14 @@ class Registration
 		return $this->email;
 	}
 
-	public function getPicture()
+	public function getPath()
 	{
-		return $this->picture;
+		return $this->path;
+	}
+
+	public function getType()
+	{
+		return $this->type;
 	}
 
 	public function getPassword()
@@ -52,7 +61,7 @@ class Registration
 		global $pdo;
 		try {
 
-			$sql = "INSERT INTO registrations SET complete_name=:name, email=:email, password=:password, picture_path=:picture, registered_at=:dateTime" ;
+			$sql = "INSERT INTO registrations SET complete_name=:name, email=:email, password=:password, picture_path=:path";
 
 			$statement = $pdo->prepare($sql);
 
@@ -60,7 +69,7 @@ class Registration
 				':name' => $this->getName(),
 				':email' => $this->getEmail(),
 				':password' => $this->getPassword(),
-                ':picture' => $this->getPicture()
+                ':path' => $this->getPath()
 			]);
 
 		} catch (Exception $e) {

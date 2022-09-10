@@ -13,7 +13,9 @@ $result = Registration::handleUpload($_FILES['picture']);
 if ($result !== FALSE) {
 
 	// Save the uploaded file to DB. File name as the label
-	$registrationObj = new Registration($GET['name']['email']['password'], $result['path'], $result['type']);
+	$registrationObj = new Registration(['name'],['email'],['password'], $result['path'], $result['type']);
+	var_dump($registrationObj);
+	exit;
 	$result = $registrationObj->save();
 
 	header('Location: index.php?success=1');
